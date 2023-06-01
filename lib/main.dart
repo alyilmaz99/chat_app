@@ -29,7 +29,9 @@ class _MyAppState extends State<MyApp> {
   getUserLoggedInStatus() async {
     await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
       if (value) {
-        _isLoggedIn = value;
+        setState(() {
+          _isLoggedIn = value;
+        });
       }
     });
   }

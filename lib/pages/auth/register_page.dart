@@ -1,6 +1,8 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'package:chat_app/helper/helper_function.dart';
 import 'package:chat_app/pages/auth/login_page.dart';
+import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/service/auth_service.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -195,8 +197,12 @@ class _RegisterPageState extends State<RegisterPage> {
       });
       await authService
           .registerUserWithEmailandPassword(fullName, email, password)
-          .then((value) {
+          .then((value) async {
         if (value == true) {
+          await HelperFunctions.saveUserLoggedInStatus(true);
+          await HelperFunctions.saveUserEmail(email);
+          await HelperFunctions.saveUserName(fullName);
+          nextScreenReplace(context, const HomeScreen());
         } else {
           showSnackBar(context, Colors.blue, value);
           setState(() {
