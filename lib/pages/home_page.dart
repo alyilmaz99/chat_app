@@ -229,5 +229,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
   popupDialog(BuildContext context) {}
 
-  groupList() {}
+  groupList() {
+    return StreamBuilder(
+        stream: groups,
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data['groups'] != null) {
+              if (snapshot.data['groups'].length == 0) {
+                return const Text('Hello');
+              } else {
+                return noGroupWidget();
+              }
+            } else {
+              return noGroupWidget();
+            }
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            );
+          }
+        });
+  }
+
+  noGroupWidget() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.add_circle_outline,
+            color: Colors.blue,
+            size: 75,
+          ),
+          SizedBox(),
+        ],
+      ),
+    );
+  }
 }
