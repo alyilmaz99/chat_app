@@ -20,6 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String userName = '';
   String email = '';
   Stream? groups;
+  bool _isLoading = false;
+  String groupName = '';
   @override
   void initState() {
     super.initState();
@@ -227,7 +229,87 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  popupDialog(BuildContext context) {}
+  popupDialog(BuildContext context) {
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+            builder: ((context, setState) {
+              return AlertDialog(
+                title: const Text(
+                  'Creat a Group',
+                  textAlign: TextAlign.left,
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _isLoading == true
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.blue,
+                            ),
+                          )
+                        : TextField(
+                            style: const TextStyle(color: Colors.black),
+                            onChanged: (value) {
+                              setState(() {
+                                groupName = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.blue),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.deepPurpleAccent),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.red),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                          ),
+                  ],
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                    ),
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                    ),
+                    onPressed: () async {
+                      if (groupName != '') {
+                        _isLoading = true;
+                      }
+                      DatabaseService(
+                              uid: FirebaseAuth.instance.currentUser!.uid)
+                          .createGroup(userName,
+                              FirebaseAuth.instance.currentUser!.uid, groupName)
+                          .whenComplete(() {
+                        _isLoading = false;
+                      });
+                      Navigator.of(context).pop();
+                      showSnackBar(context, Colors.green, "Group Created!");
+                    },
+                    child: const Text('Accept'),
+                  ),
+                ],
+              );
+            }),
+          );
+        });
+  }
 
   groupList() {
     return StreamBuilder(
@@ -235,8 +317,13 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data['groups'] != null) {
-              if (snapshot.data['groups'].length == 0) {
-                return const Text('Hello');
+              if (snapshot.data['groups'].length != 0) {
+                return ListView.builder(
+                  itemCount: snapshot.data["groups"].length,
+                  itemBuilder: ((context, index) {
+                    return Text("hello");
+                  }),
+                );
               } else {
                 return noGroupWidget();
               }
@@ -254,19 +341,36 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   noGroupWidget() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.add_circle_outline,
-            color: Colors.blue,
-            size: 75,
-          ),
-          SizedBox(),
-        ],
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                popupDialog(context);
+              },
+              child: const Icon(
+                Icons.add_circle_outline,
+                color: Colors.blue,
+                size: 75,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              textAlign: TextAlign.center,
+              'There is no groups',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
