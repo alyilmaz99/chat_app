@@ -4,6 +4,7 @@ import 'package:chat_app/pages/profile_page.dart';
 import 'package:chat_app/pages/search_page.dart';
 import 'package:chat_app/service/auth_service.dart';
 import 'package:chat_app/service/database_service.dart';
+import 'package:chat_app/widgets/group_tile.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     gettingUserData();
+  }
+
+  String getId(String res) {
+    return res.substring(0, res.indexOf("_"));
+  }
+
+  String getName(String res) {
+    return res.substring(res.indexOf("_") + 1);
   }
 
   gettingUserData() async {
@@ -321,7 +330,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListView.builder(
                   itemCount: snapshot.data["groups"].length,
                   itemBuilder: ((context, index) {
-                    return Text("hello");
+                    int reverseIndex =
+                        snapshot.data['groups'].length - index - 1;
+                    return GroupTile(
+                        userName: snapshot.data['fullName'],
+                        groupId: getId(snapshot.data['groups'][reverseIndex]),
+                        groupName:
+                            getName(snapshot.data["groups"][reverseIndex]));
                   }),
                 );
               } else {
