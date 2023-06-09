@@ -1,6 +1,8 @@
 import 'package:chat_app/pages/group_info.dart';
+import 'package:chat_app/service/database_service.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
@@ -29,7 +31,20 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   getChatandAdmin() {
-    //
+    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .getChats(widget.groupId)
+        .then((val) {
+      setState(() {
+        chats = val;
+      });
+    });
+    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .getGroupAdmin(widget.groupId)
+        .then((val) {
+      setState(() {
+        admin = val;
+      });
+    });
   }
 
   @override
