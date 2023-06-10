@@ -160,36 +160,50 @@ class _GroupInfoState extends State<GroupInfo> {
                         radius: 30,
                         backgroundColor: Theme.of(context).primaryColor,
                         child: Text(
-                          getName(snapshot.data['members'][index])
-                              .substring(0, 1)
-                              .toUpperCase(),
+                          getName(
+                            snapshot.data['members'][index],
+                          ).substring(0, 1).toUpperCase(),
                           style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      title: Text(getName(snapshot.data['members'][index])),
-                      subtitle: Text(getId(snapshot.data['members'][index])),
+                      title: Text(
+                        getName(
+                          snapshot.data['members'][index],
+                        ),
+                      ),
+                      subtitle: Text(
+                        getId(
+                          snapshot.data['members'][index],
+                        ),
+                      ),
                     ),
                   );
                 },
               );
             } else {
               return const Center(
-                child: Text("NO MEMBERS"),
+                child: Text(
+                  "NO MEMBERS",
+                ),
               );
             }
           } else {
             return const Center(
-              child: Text("NO MEMBERS"),
+              child: Text(
+                "NO MEMBERS",
+              ),
             );
           }
         } else {
           return Center(
-              child: CircularProgressIndicator(
-            color: Theme.of(context).primaryColor,
-          ));
+            child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColor,
+            ),
+          );
         }
       },
     );

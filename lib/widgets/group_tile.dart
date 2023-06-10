@@ -28,7 +28,7 @@ class _GroupTileState extends State<GroupTile> {
           ChatPage(
             groupId: widget.groupId,
             groupName: widget.groupName,
-            username: widget.userName,
+            userName: widget.userName,
           ),
         );
       },
