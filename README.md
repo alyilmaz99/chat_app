@@ -17,7 +17,7 @@ FEATURES:
 
 ## IMAGES
 
-![1](https://github.com/alyilmaz99/chat_app/assets/73197677/894b0063-1919-43d0-b7b2-300b5e986902|480x800 )
+![1](https://github.com/alyilmaz99/chat_app/assets/73197677/894b0063-1919-43d0-b7b2-300b5e986902|200x400 )
 ![2](https://github.com/alyilmaz99/chat_app/assets/73197677/f83db525-d5d4-4938-9784-50e331b15a58|480x800)
 ![3](https://github.com/alyilmaz99/chat_app/assets/73197677/13d8be13-454d-4a71-9c29-7e8bb14ef4d0|480x800)
 ![4](https://github.com/alyilmaz99/chat_app/assets/73197677/fd91f282-0e61-4700-b78a-c55b38f5c653|480x800)
