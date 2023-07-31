@@ -17,7 +17,6 @@
 ## IMAGES
 
 <img src="https://github.com/alyilmaz99/chat_app/assets/73197677/894b0063-1919-43d0-b7b2-300b5e986902" width="480" height="800">
-<img src="https://github.com/alyilmaz99/chat_app/assets/73197677/f83db525-d5d4-4938-9784-50e331b15a58" width="480" height="800">
 <img src="https://github.com/alyilmaz99/chat_app/assets/73197677/13d8be13-454d-4a71-9c29-7e8bb14ef4d0" width="480" height="800">
 <img src="https://github.com/alyilmaz99/chat_app/assets/73197677/fd91f282-0e61-4700-b78a-c55b38f5c653" width="480" height="800">
 <img src="https://github.com/alyilmaz99/chat_app/assets/73197677/a550b941-49df-48e2-bdb2-8219f578af7d" width="480" height="800">
